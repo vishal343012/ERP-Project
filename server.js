@@ -20,7 +20,7 @@ const products = [
 const customers = [
   { id: "CUS-001", name: "Northwind Traders", contact: "procurement@northwind.example", phone: "+91 22 4000 1001", city: "Mumbai", status: "Active" },
   { id: "CUS-002", name: "Contoso Services", contact: "accounts@contoso.example", phone: "+91 20 4000 1002", city: "Pune", status: "Active" },
-  { id: "CUS-003", name: "Fabrikam Retail", contact: "buying@fabrikam.example", phone: "+91 80 4000 1003", city: "Bengaluru", status: "Active" },
+  { id: "CUS-003", name: "FutureGroup Retail", contact: "buying@fabrikam.example", phone: "+91 80 4000 1003", city: "Bengaluru", status: "Active" },
   { id: "CUS-004", name: "Adventure Works", contact: "admin@adventure.example", phone: "+91 40 4000 1004", city: "Hyderabad", status: "Inactive" }
 ];
 
