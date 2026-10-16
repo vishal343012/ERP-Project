@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Suroj ERP interactive demo dashboard">
+  <title>Suroj ERP | Demo Workspace</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">S</div><div><strong>Suroj ERP</strong><small>BUSINESS WORKSPACE</small></div></div>
+    <div class="nav-label">MAIN MENU</div>
+    <button class="nav-item active" data-view="dashboard"><span>▦</span> Dashboard</button>
+    <button class="nav-item" data-view="sales"><span>↗</span> Sales <span class="nav-arrow">›</span></button>
+    <button class="nav-item" data-view="inventory"><span>▤</span> Inventory <span class="nav-arrow">›</span></button>
+    <button class="nav-item" data-view="customers"><span>♙</span> Customers <span class="nav-arrow">›</span></button>
+    <button class="nav-item" data-view="suppliers"><span>⇄</span> Suppliers <span class="nav-arrow">›</span></button>
+    <div class="sidebar-bottom"><span class="online-dot"></span><div><b>Demo environment</b><small>Sample data only</small></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <div class="breadcrumb">Workspace <span>/</span> <b id="breadcrumb">Dashboard</b></div>
+      <div class="top-right"><span class="test-badge">TEST ENVIRONMENT</span><div class="avatar">AD</div><div class="admin-label"><b>Admin</b><small>Administrator</small></div></div>
+    </header>
+    <section class="page-heading">
+      <div><p class="eyebrow">ENTERPRISE RESOURCE PLANNING</p><h1 id="page-title">Dashboard</h1><p id="page-subtitle">Welcome back. Here's your business at a glance.</p></div>
+      <div class="date-chip" id="today"></div>
+    </section>
+    <div id="notice" class="notice" role="status"></div>
+
+    <section id="view-dashboard">
+      <div class="metrics">
+        <article class="metric-card"><div class="metric-top">Total sales <span class="metric-icon blue">₹</span></div><div class="metric-value" id="metric-revenue">—</div><div class="metric-foot">Total value of demo orders</div></article>
+        <article class="metric-card"><div class="metric-top">Sales orders <span class="metric-icon violet">↗</span></div><div class="metric-value" id="metric-orders">—</div><div class="metric-foot">Across all order statuses</div></article>
+        <article class="metric-card"><div class="metric-top">Products <span class="metric-icon green">▤</span></div><div class="metric-value" id="metric-products">—</div><div class="metric-foot">Items in sample catalogue</div></article>
+        <article class="metric-card"><div class="metric-top">Customers <span class="metric-icon rose">♙</span></div><div class="metric-value" id="metric-customers">—</div><div class="metric-foot">Registered demo customers</div></article>
+      </div>
+      <div class="dashboard-grid">
+        <article class="panel"><div class="panel-heading"><div><h2>Recent sales orders</h2><p>Latest activity in the workspace</p></div><button class="link-button" data-view="sales">View sales →</button></div><div class="table-wrap"><table><thead><tr><th>ORDER ID</th><th>CUSTOMER</th><th>DATE</th><th>STATUS</th><th class="right">TOTAL</th></tr></thead><tbody id="recent-orders"></tbody></table></div></article>
+        <article class="panel"><div class="panel-heading"><div><h2>Inventory alerts</h2><p>Products with fewer than 10 units</p></div><button class="link-button" data-view="inventory">Inventory →</button></div><div id="low-stock-list" class="stock-list"></div></article>
+      </div>
+      <div class="quick-links">
+        <button data-view="sales"><span class="quick-icon blue">↗</span><span><b>Manage Sales</b><small>Review orders and create a demo order</small></span><strong>→</strong></button>
+        <button data-view="inventory"><span class="quick-icon green">▤</span><span><b>Manage Inventory</b><small>Browse SKUs, quantities and prices</small></span><strong>→</strong></button>
+        <button data-view="customers"><span class="quick-icon violet">♙</span><span><b>Customer Directory</b><small>View customer contact information</small></span><strong>→</strong></button>
+        <button data-view="suppliers"><span class="quick-icon amber">⇄</span><span><b>Supplier Directory</b><small>Review vendors and payment terms</small></span><strong>→</strong></button>
+      </div>
+    </section>
+
+    <section id="view-sales" class="panel hidden">
+      <div class="panel-heading"><div><h2>Sales orders</h2><p>Review demo orders or create a new sample order.</p></div><button id="new-order-btn" class="primary-button">＋ New order</button></div>
+      <form id="order-form" class="order-form hidden">
+        <label>Customer name<input id="order-customer" required maxlength="120" placeholder="e.g. Example Company"></label>
+        <label>Order total (INR)<input id="order-total" type="number" min="1" step="0.01" required placeholder="15000"></label>
+        <button class="primary-button" type="submit">Create demo order</button>
+      </form>
+      <div class="table-wrap"><table><thead><tr><th>ORDER ID</th><th>CUSTOMER</th><th>DATE</th><th>STATUS</th><th class="right">TOTAL</th></tr></thead><tbody id="sales-orders"></tbody></table></div>
+      <p class="disclaimer">Demo only: newly created orders are held in memory and disappear when the app restarts.</p>
+    </section>
+
+    <section id="view-inventory" class="panel hidden">
+      <div class="panel-heading"><div><h2>Inventory</h2><p>Sample product catalogue, stock quantity and supplier mapping.</p></div><span class="count-badge" id="inventory-count"></span></div>
+      <div class="toolbar"><input id="product-search" placeholder="Search product, SKU or category…"></div>
+      <div class="table-wrap"><table><thead><tr><th>SKU</th><th>PRODUCT</th><th>CATEGORY</th><th>SUPPLIER</th><th>STOCK</th><th class="right">UNIT PRICE</th></tr></thead><tbody id="inventory-rows"></tbody></table></div>
+    </section>
+
+    <section id="view-customers" class="panel hidden">
+      <div class="panel-heading"><div><h2>Customers</h2><p>Customer directory with sample contact details.</p></div><span class="count-badge" id="customers-count"></span></div>
+      <div class="toolbar"><input id="customer-search" placeholder="Search customer, city or contact…"></div>
+      <div class="table-wrap"><table><thead><tr><th>CUSTOMER ID</th><th>COMPANY</th><th>EMAIL</th><th>PHONE</th><th>CITY</th><th>STATUS</th></tr></thead><tbody id="customer-rows"></tbody></table></div>
+    </section>
+
+    <section id="view-suppliers" class="panel hidden">
+      <div class="panel-heading"><div><h2>Suppliers</h2><p>Vendor directory, product categories and payment terms.</p></div><span class="count-badge" id="suppliers-count"></span></div>
+      <div class="toolbar"><input id="supplier-search" placeholder="Search supplier, category or city…"></div>
+      <div class="table-wrap"><table><thead><tr><th>SUPPLIER ID</th><th>SUPPLIER</th><th>CATEGORY</th><th>EMAIL</th><th>PHONE</th><th>CITY</th><th>PAYMENT TERMS</th><th>STATUS</th></tr></thead><tbody id="supplier-rows"></tbody></table></div>
+    </section>
+
+    <footer>SUROJ ERP DEMO <span>•</span> Azure App Service test application <span>•</span> No production data</footer>
+  </main>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
