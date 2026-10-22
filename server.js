@@ -51,21 +51,50 @@ app.get("/api/customers", async (req, res) => {
   }
 });
 
+ 
 app.post("/api/customers", async (req, res) => {
-  const name = String(req.body?.name || "").trim().slice(0, 100);
-  const contact = String(req.body?.contact || "").trim().slice(0, 150);
-  if (!name || !contact) return res.status(400).json({ error: "Customer name and contact are required." });
+  const name = String(req.body?.name || "").trim();
+  const email = String(req.body?.email || req.body?.contact || "")
+    .trim()
+    .toLowerCase();
+  const company = String(req.body?.company || "").trim();
+
+  if (!name || !email) {
+    return res.status(400).json({
+      error: "Customer name and email are required"
+    });
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({
+      error: "Enter a valid email address"
+    });
+  }
+
   try {
     const result = await pool.query(
-      "INSERT INTO customers (name, contact, status) VALUES ($1, $2, 'Active') RETURNING id, name, contact, status, created_at",
-      [name, contact]
+      `INSERT INTO public.customers (name, email, company)
+       VALUES ($1, $2, $3)
+       RETURNING id, name, email, company, created_at`,
+      [name, email, company || null]
     );
+
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Customer insert failed:", error.message);
-    res.status(500).json({ error: "Unable to save customer. Check database schema and connection." });
+
+    if (error.code === "23505") {
+      return res.status(409).json({
+        error: "This email address is already registered"
+      });
+    }
+
+    res.status(500).json({
+      error: "Unable to save customer"
+    });
   }
 });
+
 
 app.get("*", (req, res) => {
   if (req.path.startsWith("/api/")) return res.status(404).json({ error: "API route not found" });
