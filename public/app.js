@@ -1,11 +1,16 @@
 const $ = (id) => document.getElementById(id);
 const dialog = $("customerDialog");
 
-async function api(path, options = {}) {
-  const response = await fetch(path, {
-    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
-    ...options
-  });
+const response = await fetch("/api/customers", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    name: customerName,
+    email: customerEmail
+  })
+});
   const body = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(body.error || `Request failed (${response.status})`);
   return body;
