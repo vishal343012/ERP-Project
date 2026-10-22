@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Northstar ERP | Operations Console</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">N</span><div><strong>Northstar</strong><small>ERP PLATFORM</small></div></div>
+    <div class="nav-label">WORKSPACE</div>
+    <a class="nav active" href="#"><span>▦</span> Overview</a>
+    <a class="nav" href="#customers"><span>♙</span> Customers</a>
+    <a class="nav" href="#invoices"><span>▤</span> Invoices <b class="nav-count">12</b></a>
+    <a class="nav" href="#inventory"><span>▧</span> Inventory</a>
+    <a class="nav" href="#reports"><span>▥</span> Reports</a>
+    <div class="sidebar-bottom"><div class="avatar">IT</div><div><strong>IT Administrator</strong><small>Production POC</small></div><span class="dots">•••</span></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="crumb">Workspace <span>/</span> Overview</div>
+      <div class="top-actions"><span class="env"><i></i> POC environment</span><button class="icon-button" aria-label="Notifications">♧</button><div class="avatar">IT</div></div>
+    </header>
+
+    <section class="welcome">
+      <div>
+        <div class="eyebrow">MONDAY, OPERATIONS OVERVIEW</div>
+        <h1>Good morning 👋</h1>
+        <p>Here’s what’s happening across your business today.</p>
+      </div>
+      <button class="primary" id="addTop">＋ Add customer</button>
+    </section>
+
+    <section class="metrics">
+      <article class="metric"><div class="metric-top"><span>Total customers</span><span class="metric-icon purple">♙</span></div><div class="metric-value" id="customerCount">—</div><div class="metric-note"><span class="positive">Live API</span> · current records</div></article>
+      <article class="metric"><div class="metric-top"><span>Active customers</span><span class="metric-icon green">✓</span></div><div class="metric-value" id="activeCount">—</div><div class="metric-note"><span class="positive">Operational</span> · active accounts</div></article>
+      <article class="metric"><div class="metric-top"><span>Open invoices</span><span class="metric-icon orange">▤</span></div><div class="metric-value" id="invoiceCount">—</div><div class="metric-note">Demo metric · not database-backed</div></article>
+      <article class="metric"><div class="metric-top"><span>Monthly revenue</span><span class="metric-icon blue">₹</span></div><div class="metric-value" id="revenue">—</div><div class="metric-note">Sample figure for UI demonstration</div></article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel customers-panel" id="customers">
+        <div class="panel-heading"><div><h2>Customer directory</h2><p>Customer data returned by the Node.js API</p></div><button class="secondary" id="refresh">↻ Refresh</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Customer</th><th>Contact</th><th>Status</th><th>ID</th></tr></thead><tbody id="customerRows"><tr><td colspan="4">Loading customers…</td></tr></tbody></table></div>
+        <div class="panel-footer"><span id="recordCount">Loading records…</span><span class="live"><i></i> API connected</span></div>
+      </article>
+      <article class="panel activity-panel">
+        <div class="panel-heading"><div><h2>System activity</h2><p>POC status</p></div><span class="status-pill">Healthy</span></div>
+        <div class="activity"><div class="activity-icon blue">↗</div><div><strong>Frontend loaded</strong><p>Static UI served by Node.js</p><small>Browser request · HTTPS after deployment</small></div></div>
+        <div class="activity"><div class="activity-icon green">⌘</div><div><strong>Backend API responding</strong><p><code>GET /api/summary</code></p><small id="healthText">Checking health…</small></div></div>
+        <div class="activity"><div class="activity-icon orange">◈</div><div><strong>Database integration</strong><p>Not configured in this POC</p><small>Next phase: Azure Database for PostgreSQL</small></div></div>
+        <div class="notice"><strong>POC data warning</strong><p>Customer records are stored in memory. They reset on restart and are not shared reliably across scaled instances.</p></div>
+      </article>
+    </section>
+    <footer>Northstar ERP demo · Angular can replace this sample UI later · Node.js + Express API</footer>
+  </main>
+
+  <dialog id="customerDialog">
+    <form id="customerForm">
+      <div class="dialog-head"><div><h2>Add customer</h2><p>Create a sample record through the backend API.</p></div><button type="button" class="close" id="closeDialog">×</button></div>
+      <label for="name">Customer name</label><input id="name" name="name" required maxlength="100" placeholder="e.g. Summit Components">
+      <label for="contact">Contact email</label><input id="contact" name="contact" type="email" required maxlength="150" placeholder="accounts@example.com">
+      <p class="form-error" id="formError"></p>
+      <div class="dialog-actions"><button type="button" class="secondary" id="cancelDialog">Cancel</button><button type="submit" class="primary">Create customer</button></div>
+    </form>
+  </dialog>
+  <script src="/app.js"></script>
+</body>
+</html>
